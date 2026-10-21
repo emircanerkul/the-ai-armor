@@ -31,6 +31,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
+          cp site.webmanifest _site/
           cp -R assets _site/assets
           # Fail the build if the page is missing rather than deploy a blank site.
           test -s _site/index.html
