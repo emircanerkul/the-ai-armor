@@ -4,7 +4,11 @@ A single-page model of how an AI layer that **multiplies** human capability ends
 
 **The claim:** suppression of this kind does not require the AI to be hostile, or the person to get worse. It follows from the shape of the multiplication alone. Every quantity a person cares about — their own capability, the total output, the quality of the result — can be improving at the same time that their share of the outcome collapses toward zero.
 
-Open `index.html` in a browser. No build step, no dependencies.
+> **The developer is not replaced by a better developer. The developer is replaced by the customer.**
+
+**[Open the page →](https://emircanerkul.github.io/the-ai-armor/)** · no build step, no dependencies.
+
+![The AI Armor — hero](assets/hero.png)
 
 ---
 
@@ -18,6 +22,36 @@ A hammer cannot drive a nail by itself. Its output is bounded by the arm that sw
 2. **The human share falls, not the human.** The person improves, the total improves, and the ratio between them collapses anyway. That is the part that is easy to miss.
 
 The person stays in the loop. They just stop being the reason the loop produces anything.
+
+---
+
+## The chart
+
+![Three aligned panels: factors, product, human share](assets/chart.png)
+
+Three aligned panels on a shared time axis:
+
+- **Factors** (log) — armor `x`, human `y`, and the uncapped `x′` for reference
+- **Product `z`** (log) — rises monotonically, never below 1
+- **Human share** (linear) — exactly `1/x`, crossing 50% on 1 Jan 2027
+
+Hover or use `←`/`→` to inspect any date. Click a legend chip to isolate a series. Toggle between the 20-year and 100-year spans. The velocity cap `V` is a live slider (10–2000).
+
+---
+
+## Where it surfaces
+
+Dilution is a ratio, but ratios become prices.
+
+| step | what happens |
+|---|---|
+| **1. The armor gets cheap** | What needed a team, a budget and years of skill now needs one person, a clear description, and a subscription. |
+| **2. Competition arrives from everywhere** | One person with the armor ships a whole product. The barrier that stopped them was never ambition — it was capability. |
+| **3. Prices fall toward the new cost** | With execution supply effectively unbounded, prices stop reflecting difficulty and start reflecting how cheaply something can be rebuilt. The margin *was* the difficulty. |
+| **4. Firms shrink without doing anything wrong** | A firm built on selling execution competes with the customers who used to buy it. Nobody was replaced; the market stopped needing forty people to produce the same thing. |
+| **5. Knowledge workers lose the premium on knowledge** | Software developers are the clearest case. When the armor supplies the *how*, the scarce input becomes the *what* — judgement about what should exist and why. |
+
+Each step reads as a local market story. Together they are one curve: the human share of the **work** falls, then of the **price**, then of **headcount**.
 
 ---
 
@@ -60,18 +94,41 @@ with `A = B = 1`.
 | `V` | `100` | growth-rate cap on the armor multiplier |
 | `t_c` | `7` | crossover: the year the armor multiplier reaches 2 |
 
-`V` is the only genuinely free parameter, and the page exposes it as a slider (10–2000) so the dependence can be inspected directly.
-
-## Reading the chart
-
-Three aligned panels on a shared time axis:
-
-- **Factors** (log) — armor `x`, human `y`, and the uncapped `x′` for reference
-- **Product `z`** (log) — rises monotonically, never below 1
-- **Human share** (linear) — exactly `1/x`, crossing 50% on 1 Jan 2027
-
-Hover or use `←`/`→` to inspect any date. Click a legend chip to isolate a series. Toggle between the 20-year and 100-year spans.
+`V` is the only genuinely free parameter, and the page exposes it as a slider so the dependence can be inspected directly.
 
 ## Scope
 
 This is an argument made inspectable, not a forecast. `b` and the `0.1` growth rate are placeholders; the shape of the curve is the point. The claim being tested is structural — that a self-compounding multiplier suppresses the human share regardless of how capable the human becomes — and that claim does not depend on the particular constants.
+
+---
+
+## Local development
+
+```bash
+python3 -m http.server 8000
+# open http://localhost:8000
+```
+
+Or just open `index.html` directly in a browser.
+
+## Deployment
+
+Pushes to `main` deploy automatically to GitHub Pages via [`.github/workflows/pages.yml`](.github/workflows/pages.yml).
+
+**First-time setup** — after creating the repo, set the Pages source once:
+
+1. Push this repository to GitHub.
+2. Go to **Settings → Pages → Build and deployment**.
+3. Set **Source** to **GitHub Actions**.
+
+After that, every push to `main` republishes the site.
+
+## Repository layout
+
+```
+index.html                     the page — argument, chart, model, conclusion
+assets/hero.png                hero screenshot (used above)
+assets/chart.png               chart screenshot (used above)
+.github/workflows/pages.yml    GitHub Pages deployment
+README.md                      this file
+```
