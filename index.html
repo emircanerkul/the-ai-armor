@@ -40,6 +40,16 @@
   h1{margin:0;font-size:clamp(30px,4.6vw,47px);line-height:1.04;letter-spacing:-.032em;font-weight:660}
   h1 .hl{background:linear-gradient(94deg,var(--cloak) 0%,#9ef0e6 42%,var(--total) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
   .lede{margin:16px 0 0;max-width:68ch;color:var(--muted);font-size:clamp(13.5px,1.5vw,15.5px)}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(228px,.85fr);gap:clamp(22px,3.2vw,44px);align-items:start;margin-top:16px}
+  .hero-copy .lede{margin-top:0;margin-bottom:16px;max-width:none}
+  .hero-copy .lede:last-child{margin-bottom:0}
+  .hero-rail{border:1px solid var(--line);border-radius:13px;padding:15px 16px 8px;background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.008));margin-top:2px}
+  .rail-lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  .rail-item{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:8.5px 0;border-top:1px solid var(--line-soft)}
+  .rail-item:first-of-type{border-top:0;padding-top:2px}
+  .rail-k{font-size:11.5px;color:var(--muted);line-height:1.35}
+  .rail-v{font-family:var(--mono);font-size:11.5px;color:var(--text);white-space:nowrap}
+  @media (max-width:980px){.hero-grid{grid-template-columns:1fr}.hero-rail{max-width:none}}
   .lede b{color:var(--text);font-weight:520}
   .intent{margin-top:20px;border:1px solid var(--line);border-left:2px solid var(--total);border-radius:10px;padding:15px 17px 14px;background:linear-gradient(180deg,rgba(189,169,255,.055),rgba(189,169,255,.012))}
   .intent-lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--total);margin-bottom:8px}
@@ -209,7 +219,7 @@
   tbody tr:hover td{background:rgba(255,255,255,.022);color:var(--text)}
   td sup{font-size:.72em}
 
-  .close-body{max-width:78ch}
+  .close-body{max-width:82ch}
   .close-body p{margin:0 0 16px;font-size:13.5px;line-height:1.75;color:var(--muted)}
   .close-body p b{color:var(--text);font-weight:520}
   .close-body code{font-family:var(--mono);font-size:11.5px;color:var(--text);background:rgba(255,255,255,.05);border-radius:4px;padding:1px 5px}
@@ -259,24 +269,52 @@
     <div class="kicker">The AI Armor · t = now − 2020</div>
     <h1>The tool stops needing <span class="hl">the hand.</span></h1>
 
-    <p class="lede">
-      A hammer cannot drive a nail by itself. Its output is bounded by the arm that swings it, so the person stays
-      the deciding term. <b>The AI armor is not a hammer.</b> It is a layer that multiplies what a person can do —
-      and the multiplier grows on its own.
-    </p>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="lede">
+          A hammer cannot drive a nail by itself. Its output is bounded by the arm that swings it, so the person stays
+          the deciding term. <b>The AI armor is not a hammer.</b> It is a layer that multiplies what a person can do —
+          and the multiplier grows on its own.
+        </p>
 
-    <p class="lede">
-      That single difference changes the arithmetic. Once the armor can prompt itself, it no longer depends on how
-      skilled its user is. Knowledge of the tool stops being an advantage: the user only has to be able to state what
-      they want. The armor supplies the rest. And because it supplies the rest, the share of the result that is
-      <em>you</em> keeps shrinking — even while the total keeps rising.
-    </p>
+        <p class="lede">
+          That single difference changes the arithmetic. Once the armor can prompt itself, it no longer depends on how
+          skilled its user is. Knowledge of the tool stops being an advantage: the user only has to be able to state
+          what they want. The armor supplies the rest. And because it supplies the rest, the share of the result that
+          is <em>you</em> keeps shrinking — even while the total keeps rising.
+        </p>
 
-    <p class="lede">
-      <b>This is what suppression looks like:</b> not a loss of ability, but a loss of proportion. The person keeps
-      improving. The armor improves far faster. On <b>1 January 2027</b> the two cross, and after that the human
-      contribution is a rounding error inside a result the armor is mostly responsible for.
-    </p>
+        <p class="lede">
+          <b>This is what suppression looks like:</b> not a loss of ability, but a loss of proportion. The person keeps
+          improving. The armor improves far faster. On <b>1 January 2027</b> the two cross, and after that the human
+          contribution is a rounding error inside a result the armor is mostly responsible for.
+        </p>
+      </div>
+
+      <aside class="hero-rail" aria-label="Key landmarks">
+        <div class="rail-lab">At a glance</div>
+        <div class="rail-item">
+          <span class="rail-k">Human share now</span>
+          <span class="rail-v" id="railNow">—</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-k">50 / 50 crossover</span>
+          <span class="rail-v" id="railCross">—</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-k">Armor takes 90%</span>
+          <span class="rail-v" id="rail90">—</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-k">Growth cap binds</span>
+          <span class="rail-v" id="railCap">—</span>
+        </div>
+        <div class="rail-item">
+          <span class="rail-k">Share in 2040</span>
+          <span class="rail-v" id="rail2040">—</span>
+        </div>
+      </aside>
+    </div>
 
     <div class="intent" role="note">
       <div class="intent-lab">Why this page exists</div>
@@ -601,6 +639,16 @@
   /* Because z = x·y, the human base contribution is y and the armor's added
      contribution is (x-1)·y. Human share = y/z = 1/x, exactly. */
   function shareHuman(t){ return 1 / armor(t); }
+  /* first time the human share drops to `target` (share is strictly decreasing) */
+  function tAtShare(target){
+    if (shareHuman(T_MIN) <= target) return T_MIN;
+    var lo = T_MIN, hi = 400;
+    for (var i = 0; i < 200; i++){
+      var mid = (lo + hi) / 2;
+      if (shareHuman(mid) > target) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
   function shareArmor(t){ return 1 - 1 / armor(t); }
 
   recalibrate();
@@ -662,7 +710,9 @@
     note:$("#chartNote"), readout:$("#kbdReadout"),
     insights:$("#insights"), dataBody:$("#dataBody"), legend:$("#legend"),
     vRange:$("#vRange"), vLabel:$("#vLabel"), capYear:$("#capYear"),
-    floorPct:$("#floorPct"), heroV:$("#heroV")
+    floorPct:$("#floorPct"), heroV:$("#heroV"),
+    railNow:$("#railNow"), railCross:$("#railCross"), rail90:$("#rail90"),
+    railCap:$("#railCap"), rail2040:$("#rail2040")
   };
 
   var state = { view:"20y", hidden:{}, hover:null, ptr:null, kbd:false };
@@ -1119,6 +1169,16 @@
     el.heroV.textContent = "V = " + V;
     el.capYear.textContent = fmtDate(capT);
     el.floorPct.textContent = H(product(0), 3);
+
+    /* hero landmark rail */
+    if (el.railNow){
+      var tn = Math.max(nowT, 0.02);
+      el.railNow.textContent = pct(1 / armor(tn), 2);
+      el.railCross.textContent = fmtDate(TC);
+      el.rail90.textContent = fmtDate(tAtShare(0.10));
+      el.railCap.textContent = fmtDate(capT);
+      el.rail2040.textContent = pct(1 / armor(20), 2);
+    }
   }
 
   function renderInsights(){
