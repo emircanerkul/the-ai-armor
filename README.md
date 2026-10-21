@@ -1,12 +1,14 @@
-# the-ai-armor
+# The AI Armor
+
+<p align="center">
+  <a href="https://emircanerkul.github.io/the-ai-armor/"><b>Open the website →</b></a>
+</p>
 
 A single-page model of how an AI layer that **multiplies** human capability ends up **suppressing the human share** of the outcome.
 
 **The claim:** suppression of this kind does not require the AI to be hostile, or the person to get worse. It follows from the shape of the multiplication alone. Every quantity a person cares about — their own capability, the total output, the quality of the result — can be improving at the same time that their share of the outcome collapses toward zero.
 
 > **The developer is not replaced by a better developer. The developer is replaced by the customer.**
-
-**[Open the page →](https://emircanerkul.github.io/the-ai-armor/)** · no build step, no dependencies.
 
 ![The AI Armor — hero](assets/hero.png)
 
@@ -99,36 +101,3 @@ with `A = B = 1`.
 ## Scope
 
 This is an argument made inspectable, not a forecast. `b` and the `0.1` growth rate are placeholders; the shape of the curve is the point. The claim being tested is structural — that a self-compounding multiplier suppresses the human share regardless of how capable the human becomes — and that claim does not depend on the particular constants.
-
----
-
-## Local development
-
-```bash
-python3 -m http.server 8000
-# open http://localhost:8000
-```
-
-Or just open `index.html` directly in a browser.
-
-## Deployment
-
-Pushes to `main` deploy automatically to GitHub Pages via [`.github/workflows/pages.yml`](.github/workflows/pages.yml).
-
-**First-time setup** — after creating the repo, set the Pages source once:
-
-1. Push this repository to GitHub.
-2. Go to **Settings → Pages → Build and deployment**.
-3. Set **Source** to **GitHub Actions**.
-
-After that, every push to `main` republishes the site.
-
-## Repository layout
-
-```
-index.html                     the page — argument, chart, model, conclusion
-assets/hero.png                hero screenshot (used above)
-assets/chart.png               chart screenshot (used above)
-.github/workflows/pages.yml    GitHub Pages deployment
-README.md                      this file
-```
