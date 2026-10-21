@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="The AI Armor: a model of how an AI layer that multiplies human capability ends up suppressing the human share of it. The crossover lands in 2027.">
+<title>The AI Armor — when the multiplier outgrows the hand</title>
+<style>
+  :root{
+    --bg:#05070d;
+    --line:rgba(148,170,205,.13);
+    --line-soft:rgba(148,170,205,.07);
+    --text:#e9eef8;
+    --muted:#95a4bd;
+    --faint:#687790;
+    --cloak:#4fe3d0;
+    --human:#ffb45e;
+    --total:#bda9ff;
+    --amber:#ffd7a3;
+    --radius:16px;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--sans);font-size:14px;line-height:1.5;color:var(--text);
+    background:
+      radial-gradient(1100px 560px at 10% -8%, rgba(79,227,208,.10), transparent 62%),
+      radial-gradient(1000px 520px at 92% -14%, rgba(189,169,255,.11), transparent 60%),
+      var(--bg);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  .app{max-width:1160px;margin:0 auto;padding:clamp(28px,5vw,54px) clamp(16px,4vw,32px) 72px}
+
+  .hero{padding-bottom:clamp(22px,3.4vw,34px);border-bottom:1px solid var(--line-soft)}
+  .kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--cloak);margin-bottom:18px}
+  .kicker::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cloak);box-shadow:0 0 14px rgba(79,227,208,.9)}
+  h1{margin:0;font-size:clamp(30px,4.6vw,47px);line-height:1.04;letter-spacing:-.032em;font-weight:660}
+  h1 .hl{background:linear-gradient(94deg,var(--cloak) 0%,#9ef0e6 42%,var(--total) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{margin:16px 0 0;max-width:68ch;color:var(--muted);font-size:clamp(13.5px,1.5vw,15.5px)}
+  .lede b{color:var(--text);font-weight:520}
+  .intent{margin-top:20px;border:1px solid var(--line);border-left:2px solid var(--total);border-radius:10px;padding:15px 17px 14px;background:linear-gradient(180deg,rgba(189,169,255,.055),rgba(189,169,255,.012))}
+  .intent-lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--total);margin-bottom:8px}
+  .intent p{margin:0;font-size:12.5px;line-height:1.65;color:var(--muted)}
+  .intent b{color:var(--text);font-weight:520}
+  .eq-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .eq{display:inline-flex;align-items:baseline;gap:8px;font-family:var(--mono);font-size:11.5px;color:var(--muted);background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:9px;padding:6px 10px}
+  .eq var{font-style:normal;color:var(--c)}
+  .eq sup{font-size:.72em}
+  .hero-foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:22px}
+  .verdict{display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:7px 13px;font-size:11.5px;color:var(--text);background:rgba(255,255,255,.035);border:1px solid var(--line)}
+  .verdict .pulse{width:7px;height:7px;border-radius:50%;background:var(--cloak);box-shadow:0 0 0 0 rgba(79,227,208,.5);animation:pulse 2.6s ease-out infinite}
+  .verdict .t{color:var(--muted)}
+  .verdict .sep{color:var(--faint)}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(79,227,208,.45)}70%{box-shadow:0 0 0 7px rgba(79,227,208,0)}100%{box-shadow:0 0 0 0 rgba(79,227,208,0)}}
+  .hero-note{font-size:11.5px;color:var(--faint)}
+  .hero-note code{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:20px}
+  .stat{position:relative;border:1px solid var(--line);border-radius:14px;padding:15px 16px 14px;background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,0))}
+  .stat::before{content:"";position:absolute;left:0;top:0;height:2px;width:44%;background:linear-gradient(90deg,var(--c),transparent)}
+  .stat .lab{display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);font-weight:500}
+  .stat .lab i{width:6px;height:6px;border-radius:50%;background:var(--c);opacity:.9}
+  .stat .v{margin-top:9px;font-family:var(--mono);font-size:clamp(19px,2.4vw,25px);letter-spacing:-.02em;color:var(--text);line-height:1.3;white-space:nowrap}
+  .stat .v sup{font-size:.6em;line-height:0;vertical-align:super}
+  .stat .sub{margin-top:6px;font-size:11px;color:var(--faint);font-family:var(--mono)}
+
+  .panel{position:relative;margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(180deg,rgba(17,25,41,.78),rgba(8,13,22,.82));box-shadow:0 30px 70px -34px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.035);padding:18px 20px 14px}
+  .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .panel-title h2{margin:0;font-size:15px;font-weight:600;letter-spacing:-.012em}
+  .panel-title p{margin:3px 0 0;font-size:11.5px;color:var(--faint)}
+  .seg{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.03)}
+  .seg button{appearance:none;border:0;background:transparent;color:var(--muted);font-family:inherit;font-size:12px;font-weight:500;padding:6px 13px;border-radius:7px;cursor:pointer;transition:background .16s,color .16s}
+  .seg button:hover{color:var(--text)}
+  .seg button[aria-pressed="true"]{background:rgba(255,255,255,.09);color:var(--text);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+  .seg button:focus-visible{outline:2px solid var(--cloak);outline-offset:1px}
+  .legend{display:flex;gap:6px;flex-wrap:wrap;margin-top:13px;align-items:center}
+  .chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:999px;padding:5px 11px;font-family:inherit;font-size:11.5px;color:var(--muted);cursor:pointer;transition:border-color .16s,opacity .16s,color .16s}
+  .chip:hover{border-color:rgba(148,170,205,.32);color:var(--text)}
+  .chip[aria-pressed="false"]{opacity:.38;text-decoration:line-through}
+  .chip:focus-visible{outline:2px solid var(--cloak);outline-offset:2px}
+  .chip i{width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 9px var(--c)}
+  .chip b{font-weight:600;color:var(--text)}
+
+  .control{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.022)}
+  .control-lab{display:flex;flex-direction:column;gap:2px;min-width:112px}
+  .control-lab span:first-child{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);font-weight:500}
+  .control-lab span:last-child{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .control input[type=range]{flex:1;min-width:150px;appearance:none;-webkit-appearance:none;height:22px;background:transparent;cursor:pointer}
+  .control input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--human) 0%,var(--cloak) 100%);opacity:.55}
+  .control input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--text);border:2px solid #0a1018;margin-top:-5.5px;box-shadow:0 0 0 4px rgba(79,227,208,.13),0 2px 8px rgba(0,0,0,.6)}
+  .control input[type=range]:focus-visible{outline:2px solid var(--cloak);outline-offset:6px;border-radius:6px}
+  .control input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--human),var(--cloak));opacity:.55}
+  .control input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--text);border:2px solid #0a1018}
+  .readout{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--faint)}
+  .readout b{color:var(--text);font-weight:500}
+  .readout .up{color:var(--cloak)}
+  .hint{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.02em}
+  .hint kbd{font-family:var(--mono);font-size:10px;border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:1px 5px;color:var(--muted);background:rgba(255,255,255,.03)}
+
+  .chart-stage{position:relative;margin-top:12px;border-radius:10px}
+  .chart-stage:focus-visible{outline:2px solid var(--cloak);outline-offset:4px}
+  .chart-main svg{display:block;width:100%;height:auto;overflow:visible}
+  .chart-main svg{cursor:crosshair;touch-action:pan-y}
+
+  svg text{font-family:var(--sans)}
+  svg .grid{stroke:rgba(148,170,205,.075);stroke-width:1}
+  svg .grid-v{stroke:rgba(148,170,205,.04);stroke-width:1}
+  svg .tick,svg .tick-x{fill:var(--faint);font-size:10.5px;font-family:var(--mono)}
+  svg .tick-r{fill:rgba(189,169,255,.72);font-size:10.5px;font-family:var(--mono)}
+  svg .tick-mark-r{stroke:rgba(189,169,255,.35);stroke-width:1}
+  svg .serie{fill:none;stroke-width:2.15;stroke-linecap:round;stroke-linejoin:round}
+  svg .s-cloak{stroke:var(--cloak)}
+  svg .s-ghost{stroke:var(--cloak);opacity:.34;stroke-width:1.6;stroke-dasharray:4 5}
+  svg .s-human{stroke:var(--human)}
+  svg .s-total{stroke:var(--total);stroke-width:2.4}
+  svg .cap-line{stroke:rgba(79,227,208,.26);stroke-width:1;stroke-dasharray:2 5}
+  svg .cap-lab{fill:rgba(79,227,208,.72);font-size:9px;font-family:var(--mono);letter-spacing:.06em}
+  svg .now-line{stroke:rgba(233,238,248,.26);stroke-width:1;stroke-dasharray:2 4}
+  svg .now-lab{fill:var(--muted);font-size:9px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase}
+  svg .dl-name{font-size:10px;font-weight:600;letter-spacing:.02em}
+  svg .dl-val{font-size:9.5px;font-family:var(--mono);fill:var(--faint)}
+  svg .xhair{stroke:rgba(233,238,248,.4);stroke-width:1;stroke-dasharray:3 4}
+  svg .hover-dot{stroke:#080d16;stroke-width:2}
+  svg .fill-cloak{fill:url(#grad-cloak)}
+  svg .fill-human{fill:url(#grad-human)}
+  svg .fifty{stroke:rgba(233,238,248,.2);stroke-width:1;stroke-dasharray:2 4}
+  svg .share-tick{fill:var(--faint);font-size:9px;font-family:var(--mono)}
+  svg .share-lab{fill:rgba(9,14,23,.86);font-size:9.5px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase}
+  svg .s-share{stroke:var(--human);stroke-width:2.1}
+  svg .panel-head{fill:var(--faint);font-size:9px;font-family:var(--mono);letter-spacing:.14em}
+  svg .panel-head.in-frame{fill:rgba(148,170,205,.52)}
+  svg .tick-b{fill:rgba(189,169,255,.7)}
+  svg .floor-line{stroke:rgba(255,180,94,.3);stroke-width:1;stroke-dasharray:2 4}
+  svg .floor-lab{fill:rgba(255,180,94,.72);font-size:9px;font-family:var(--mono)}
+  svg .draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.4s cubic-bezier(.22,.85,.2,1) forwards}
+  svg .fade{opacity:0;animation:fadein .9s ease .35s forwards}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fadein{to{opacity:1}}
+
+  .chart-note{margin:11px 0 0;font-size:11.5px;color:var(--faint);line-height:1.6}
+  .chart-note b{color:var(--muted);font-weight:500}
+
+  .tooltip{position:absolute;left:0;top:0;z-index:8;pointer-events:none;opacity:0;transition:opacity .12s ease;background:rgba(10,16,28,.95);border:1px solid rgba(148,170,205,.24);border-radius:11px;padding:10px 12px;min-width:222px;box-shadow:0 22px 48px -14px rgba(0,0,0,.8);backdrop-filter:blur(10px);font-size:12px}
+  .tooltip.on{opacity:1}
+  .tt-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:8px;margin-bottom:7px;border-bottom:1px solid var(--line-soft)}
+  .tt-head b{font-weight:600;font-size:12px;letter-spacing:-.01em}
+  .tt-head span{font-family:var(--mono);font-size:10.5px;color:var(--faint);white-space:nowrap}
+  .tt-row{display:grid;grid-template-columns:9px 1fr auto;align-items:center;gap:8px;padding:2.5px 0}
+  .tt-row i{width:7px;height:7px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+  .tt-row span{color:var(--muted);font-size:11.5px}
+  .tt-row em{font-style:normal;font-family:var(--mono);font-size:11.5px;color:var(--text);white-space:nowrap}
+  .tt-row em sup{font-size:.7em}
+  .tt-foot{display:flex;justify-content:space-between;gap:12px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line-soft);font-family:var(--mono);font-size:10px;color:var(--faint)}
+
+  .section{margin-top:clamp(30px,4.6vw,48px)}
+  .arg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+  .arg-block{position:relative;border:1px solid var(--line);border-radius:14px;padding:17px 18px 16px;background:rgba(255,255,255,.015)}
+  .arg-num{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--total);opacity:.8}
+  .arg-block h3{margin:8px 0 9px;font-size:14.5px;font-weight:600;letter-spacing:-.012em;line-height:1.3}
+  .arg-block p{margin:0;font-size:12.5px;line-height:1.68;color:var(--muted)}
+  .arg-block code{font-family:var(--mono);font-size:11px;color:var(--text);background:rgba(255,255,255,.05);border-radius:4px;padding:1px 4px}
+  @media (max-width:820px){.arg-grid{grid-template-columns:1fr}}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:15px}
+  .section-head h2{margin:0;font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+  .section-head p{margin:0;font-size:11.5px;color:var(--faint)}
+  .insights{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
+  .card{position:relative;border:1px solid var(--line);border-radius:14px;padding:16px 15px 15px;background:linear-gradient(180deg,rgba(255,255,255,.024),rgba(255,255,255,0));overflow:hidden}
+  .card::after{content:"";position:absolute;left:15px;top:0;height:2px;width:34px;background:var(--c)}
+  .card .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+  .card h3{margin:9px 0 7px;font-size:14px;font-weight:600;letter-spacing:-.012em;line-height:1.25}
+  .card p{margin:0;font-size:12px;color:var(--muted);line-height:1.58}
+  .card .n{font-family:var(--mono);font-size:11.5px;color:var(--text)}
+  .card .n sup{font-size:.72em}
+
+  .method{display:grid;grid-template-columns:1.02fr .98fr;gap:11px}
+  .soft{border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;background:rgba(255,255,255,.015)}
+  .soft h3{margin:0 0 3px;font-size:13.5px;font-weight:600;letter-spacing:-.01em}
+  .soft .soft-sub{margin:0 0 14px;font-size:11.5px;color:var(--faint)}
+  .eqi{display:grid;grid-template-columns:minmax(150px,max-content) 1fr;gap:14px 18px;align-items:baseline;padding:11px 0;border-top:1px solid var(--line-soft)}
+  .eqi:first-child{border-top:0;padding-top:0}
+  .eqi code{font-family:var(--mono);font-size:12px;color:var(--text);white-space:normal;overflow-wrap:anywhere;line-height:1.45}
+  .eqi code sup{font-size:.72em}
+  .eqi code sub{font-size:.72em}
+  .eqi code .cx{color:var(--cloak)} .eqi code .ch{color:var(--human)} .eqi code .cz{color:var(--total)}
+  .eqi p{margin:0;font-size:11.5px;color:var(--faint);line-height:1.5}
+  .notes{margin:0;padding:0;list-style:none}
+  .notes li{position:relative;padding:10px 0 10px 17px;border-top:1px solid var(--line-soft);font-size:12px;color:var(--muted);line-height:1.55}
+  .notes li:first-child{border-top:0;padding-top:0}
+  .notes li::before{content:"";position:absolute;left:0;top:17px;width:5px;height:5px;border-radius:50%;background:var(--line)}
+  .notes li:first-child::before{top:7px}
+  .notes b{color:var(--text);font-weight:500}
+  .notes code{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+  details.data{margin-top:12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.012);padding:0 16px}
+  details.data summary{cursor:pointer;list-style:none;padding:13px 0;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:9px}
+  details.data summary::-webkit-details-marker{display:none}
+  details.data summary::before{content:"▸";font-size:10px;color:var(--faint);transition:transform .18s}
+  details.data[open] summary::before{transform:rotate(90deg)}
+  details.data summary:hover{color:var(--text)}
+  .table-wrap{overflow-x:auto;padding-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px;min-width:660px}
+  caption{text-align:left;font-size:10.5px;color:var(--faint);padding:0 0 9px;font-family:var(--sans)}
+  th{text-align:right;font-weight:500;color:var(--faint);padding:7px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{text-align:right;padding:6px 9px;border-bottom:1px solid var(--line-soft);color:var(--muted);white-space:nowrap}
+  th:first-child,td:first-child{text-align:left}
+  tbody tr:hover td{background:rgba(255,255,255,.022);color:var(--text)}
+  td sup{font-size:.72em}
+
+  .close-body{max-width:78ch}
+  .close-body p{margin:0 0 16px;font-size:13.5px;line-height:1.75;color:var(--muted)}
+  .close-body p b{color:var(--text);font-weight:520}
+  .close-body code{font-family:var(--mono);font-size:11.5px;color:var(--text);background:rgba(255,255,255,.05);border-radius:4px;padding:1px 5px}
+  .close-body em{color:var(--text);font-style:italic}
+  .close-body .close-em{margin-top:22px;padding-left:15px;border-left:2px solid var(--total);color:var(--text);font-size:14.5px;line-height:1.6}
+  footer{margin-top:clamp(30px,4vw,44px);padding-top:18px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--faint)}
+  footer code{font-family:var(--mono);font-size:10.5px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+  @media (max-width:980px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .insights{grid-template-columns:repeat(2,1fr)}
+    .method{grid-template-columns:1fr}
+  }
+  @media (max-width:640px){
+    svg .tick,svg .tick-x,svg .tick-r{font-size:9.5px}
+    svg .dl-name,svg .dl-val{display:none}
+    svg .panel-head{font-size:8.5px;letter-spacing:.10em}
+    .app{padding-top:24px}
+    .panel{padding:14px 12px 12px;border-radius:14px}
+    .insights{grid-template-columns:1fr}
+    .stat .v{font-size:19px}
+    .hint{display:none}
+    .control{gap:10px}
+    .readout{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    svg .draw{stroke-dashoffset:0}
+    svg .fade{opacity:1}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="hero">
+    <div class="kicker">the-ai-armor · t = now − 2020</div>
+    <h1>The tool stops needing <span class="hl">the hand.</span></h1>
+
+    <p class="lede">
+      A hammer cannot drive a nail by itself. Its output is bounded by the arm that swings it, so the person stays
+      the deciding term. <b>The AI armor is not a hammer.</b> It is a layer that multiplies what a person can do —
+      and the multiplier grows on its own.
+    </p>
+
+    <p class="lede">
+      That single difference changes the arithmetic. Once the armor can prompt itself, it no longer depends on how
+      skilled its user is. Knowledge of the tool stops being an advantage: the user only has to be able to state what
+      they want. The armor supplies the rest. And because it supplies the rest, the share of the result that is
+      <em>you</em> keeps shrinking — even while the total keeps rising.
+    </p>
+
+    <p class="lede">
+      <b>This is what suppression looks like:</b> not a loss of ability, but a loss of proportion. The person keeps
+      improving. The armor improves far faster. On <b>1 January 2027</b> the two cross, and after that the human
+      contribution is a rounding error inside a result the armor is mostly responsible for.
+    </p>
+
+    <div class="intent" role="note">
+      <div class="intent-lab">Why this page exists</div>
+      <p>
+        To make a specific claim inspectable: <b>an AI layer that multiplies human capability will, by the shape of
+        that multiplication alone, reduce the human share of the outcome toward zero.</b> Nothing here requires the
+        AI to be hostile or the human to get worse. The suppression is structural. The chart below is the argument;
+        the slider is there so you can test how much the result depends on the one free parameter.
+      </p>
+    </div>
+
+    <div class="eq-row">
+      <span class="eq" style="--c:var(--human)"><span>human</span><var>y</var> = b · (1 + 0.1t)</span>
+      <span class="eq" style="--c:var(--cloak)"><span>armor</span><var>x</var> = 1 + cap((t/7)<sup>2 + 0.5t</sup>, V)</span>
+      <span class="eq" style="--c:var(--total)"><span>product</span><var>z</var> = x · y</span>
+    </div>
+    <div class="hero-foot">
+      <span class="verdict" id="verdict"><span class="pulse"></span><span class="t">computing…</span></span>
+      <span class="hero-note">A = B = 1 · crossover pinned to 1 Jan 2027 · growth-rate cap <code id="heroV">V = 100</code></span>
+    </div>
+  </header>
+
+  <section class="stats" id="stats" aria-label="Current values"></section>
+
+  <section class="section arg" aria-labelledby="argTitle">
+    <div class="section-head">
+      <h2 id="argTitle">The argument</h2>
+      <p>four steps, no assumptions about intent</p>
+    </div>
+    <div class="arg-grid">
+      <article class="arg-block">
+        <div class="arg-num">01</div>
+        <h3>A hammer is bounded by the arm</h3>
+        <p>
+          With a hammer, output is roughly the force of the swing. The tool adds almost nothing of its own, so the
+          skilled person and the unskilled person get very different results. Skill is the dominant term, and it stays
+          dominant no matter how long you use the hammer. This is why "human capability × tool capability" behaves
+          sensibly for ordinary tools: the tool's factor is close to constant.
+        </p>
+      </article>
+
+      <article class="arg-block">
+        <div class="arg-num">02</div>
+        <h3>The armor can prompt itself</h3>
+        <p>
+          An AI layer is different in one decisive way: it generates the next step without waiting for the user's
+          skill to generate it. The user no longer needs to know how to do the thing — only how to describe it. The
+          moment that is true, the tool's contribution stops being a constant and starts compounding on its own. The
+          equation becomes <code>result = armor × human</code>, where the first factor is now the one that grows.
+        </p>
+      </article>
+
+      <article class="arg-block">
+        <div class="arg-num">03</div>
+        <h3>Knowledge stops being leverage</h3>
+        <p>
+          When the armor can supply expertise, knowing more about the domain buys you less and less. A person who has
+          spent years learning a field and a person who can articulate what they want end up with similar output,
+          because the armor fills the gap for both. This is the uncomfortable part of the idea: the thing we usually
+          call "being good at this" is exactly what the armor absorbs first. The advantage that survives is the
+          ability to state intent clearly, not the ability to execute.
+        </p>
+      </article>
+
+      <article class="arg-block">
+        <div class="arg-num">04</div>
+        <h3>So the human share falls, not the human</h3>
+        <p>
+          Note what is <em>not</em> happening. Human capability is not decreasing — in this model it rises
+          continuously. The product is not shrinking — it rises faster than either factor alone. What collapses is the
+          <em>ratio</em>. The human share of the total goes from nearly all of it to a fraction of a percent, while
+          both the person and the total improve. That is what makes the suppression easy to miss: every individual
+          number looks like progress.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="chartTitle">
+    <div class="panel-head">
+      <div class="panel-title">
+        <h2 id="chartTitle">Capability over time</h2>
+        <p>Factors on the left log axis · product on the right log axis · t = years since 1 Jan 2020</p>
+      </div>
+      <div class="seg" role="group" aria-label="Time range">
+        <button type="button" data-view="20y" aria-pressed="true">20 years</button>
+        <button type="button" data-view="100y" aria-pressed="false">100 years</button>
+      </div>
+    </div>
+
+    <div class="legend" id="legend">
+      <button type="button" class="chip" data-serie="cloak" aria-pressed="true" style="--c:var(--cloak)"><i></i><b>armor</b> x</button>
+      <button type="button" class="chip" data-serie="ghost" aria-pressed="true" style="--c:var(--cloak)"><i style="opacity:.5"></i><b>uncapped</b> x′</button>
+      <button type="button" class="chip" data-serie="human" aria-pressed="true" style="--c:var(--human)"><i></i><b>human</b> y</button>
+      <button type="button" class="chip" data-serie="total" aria-pressed="true" style="--c:var(--total)"><i></i><b>product</b> z = x·y</button>
+      <span class="hint">log scale · <kbd>←</kbd><kbd>→</kbd> to inspect</span>
+    </div>
+
+    <div class="control">
+      <div class="control-lab"><span>velocity cap</span><span>V = <b id="vLabel">100</b></span></div>
+      <input type="range" id="vRange" min="10" max="2000" step="10" value="100" aria-label="Velocity cap V, from 10 to 2000">
+      <div class="readout">
+        <span>cap binds <b id="capYear">—</b></span>
+        <span>armor then grows <b class="up">+V / year</b></span>
+        <span>minimum product <b id="floorPct">—</b></span>
+      </div>
+    </div>
+
+    <div class="chart-stage" id="chartStage" tabindex="0" role="group" aria-labelledby="chartTitle" aria-describedby="chartHelp">
+      <div class="chart-main" id="mainChart" aria-hidden="true"></div>
+      <div class="tooltip" id="tooltip" aria-hidden="true"></div>
+    </div>
+
+    <p class="chart-note" id="chartNote"></p>
+    <p class="sr-only" id="chartHelp">Interactive chart. Use left and right arrow keys to move a time cursor; shift plus arrow moves faster; Home and End jump to the range edges; Escape clears the cursor.</p>
+    <p class="sr-only" id="kbdReadout" aria-live="polite"></p>
+  </section>
+
+  <section class="section" aria-labelledby="insightsTitle">
+    <div class="section-head">
+      <h2 id="insightsTitle">What the arithmetic says</h2>
+      <p>computed live from V</p>
+    </div>
+    <div class="insights" id="insights"></div>
+  </section>
+
+  <section class="section" aria-labelledby="modelTitle">
+    <div class="section-head">
+      <h2 id="modelTitle">Reading the model</h2>
+      <p>three terms, one cap, one product</p>
+    </div>
+    <div class="method">
+      <div class="soft">
+        <h3>The equations</h3>
+        <p class="soft-sub">A = B = 1. The cap is the only free parameter.</p>
+        <div class="eqi"><code>t = now − 2020</code><p>Years since 1 Jan 2020, fractional.</p></div>
+        <div class="eqi"><code><span class="ch">y</span> = b · (1 + 0.1t)</code><p>Human capability. Grows gently and never falls.</p></div>
+        <div class="eqi"><code><span class="cx">x</span> = 1 + cap(a·(t/7)<sup>2+0.5t</sup>, V)</code><p>Armor multiplier. Equals 1 at t = 0, reaches 2 at t = 7, then grows at slope V once its growth rate would exceed V.</p></div>
+        <div class="eqi"><code><span class="cz">z</span> = x · y</code><p>The product. Both factors are ≥ 1, so z ≥ 1 for every t.</p></div>
+        <div class="eqi"><code>share<sub>human</sub> = y / z = 1 / x</code><p>Since z = x·y, the human share is exactly the reciprocal of the armor multiplier.</p></div>
+      </div>
+      <div class="soft">
+        <h3>How to read it</h3>
+        <p class="soft-sub">At V = 100.</p>
+        <ul class="notes">
+          <li><b>The crossover is pinned.</b> x reaches 2 at t = 7, so the human share crosses 50% on <code>1 Jan 2027</code>. Before that the person holds the larger portion; after it, the armor takes over.</li>
+          <li><b>The cap binds later.</b> Whenever the growth rate would exceed V, the armor switches to a straight line of slope V. At V = 100 that happens on <code>15 May 2032</code>.</li>
+          <li><b>Human share = 1/x.</b> The human portion halves every time the armor multiplier doubles: 50% at x = 2, 25% at x = 4, 10% at x = 10.</li>
+          <li><b>z ≥ 1.</b> Both factors are at least 1, so the product never falls below the human baseline.</li>
+        </ul>
+      </div>
+    </div>
+
+    <details class="data">
+      <summary>Data table — exact values</summary>
+      <div class="table-wrap">
+        <table>
+          <caption>Values at selected times for the current V.</caption>
+          <thead>
+            <tr><th>date</th><th>t</th><th>armor x</th><th>human y</th><th>product z</th><th>human share</th><th>x / y</th></tr>
+          </thead>
+          <tbody id="dataBody"></tbody>
+        </table>
+      </div>
+    </details>
+  </section>
+
+  <section class="section close" aria-labelledby="closeTitle">
+    <div class="section-head">
+      <h2 id="closeTitle">What this means</h2>
+      <p>the claim, stated plainly</p>
+    </div>
+    <div class="close-body">
+      <p>
+        The interesting thing about the armor is not that it makes a person stronger. It is that it eventually stops
+        needing the person to be strong. A hammer needs an arm; the armor needs an intention. And once a tool needs
+        only an intention, the skill of the person holding it is no longer the thing being multiplied — the armor's
+        own capability is.
+      </p>
+      <p>
+        That is why the equation doesn't behave like a normal tool. With a hammer, <code>human × tool</code> works
+        because the tool term is roughly fixed: it is a multiplier near one. Here the multiplier rises without bound
+        and without instruction, so the product grows while the human share collapses. The person is not defeated.
+        The person is <em>diluted</em>.
+      </p>
+      <p>
+        The uncomfortable conclusion is that this does not require anyone to be replaced, deskilled, or made worse
+        off. Every quantity a person cares about — their own capability, the total output, the quality of the result —
+        can be improving at the same time that their share of the outcome approaches zero. Suppression of this kind
+        does not announce itself. It looks like a chart where everyone is winning.
+      </p>
+      <p class="close-em">
+        The person stays in the loop. They just stop being the reason the loop produces anything.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <span><b style="color:var(--muted);font-weight:500">the-ai-armor</b> — how a capability multiplier suppresses the human share of the outcome.</span>
+    <span><code>x = 1 + cap((t/7)^(2+t/2), V)</code> · <code>y = b(1+0.1t)</code> · <code>z = x·y</code></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     MODEL — velocity-capped armor, non-degrading human
+     ============================================================ */
+  var A = 1, B = 1;
+  var YEAR_MS = 365.25 * 86400000;
+  var T0 = Date.UTC(2020, 0, 1);
+  var T_MIN = 0.01;
+  var V = 100;
+
+  /* calendar year -> t */
+  function yearT(y){ return (Date.UTC(y, 0, 1) - T0) / YEAR_MS; }
+  /* Crossover anchor: x = 2 at TC, i.e. exactly 50/50 on 1 Jan 2027. */
+  var TC = yearT(2027);
+  /* amplification a·(t/TC)^(2 + 0.5t) — armor's growing power, 1 at t = TC */
+  function amp(t){ return A * Math.exp((2 + 0.5 * t) * Math.log(t / TC)); }
+  function ampRate(t){
+    return amp(t) * ((2 + 0.5 * t) / t + 0.5 * Math.log(t / TC));
+  }
+  /* human: non-degrading, gently growing; b·1 = b at t=0 */
+  function human(t){ return B * (1 + 0.1 * t); }
+
+  var capT = 0, capAmp = 0;
+  function recalibrate(){
+    var lo = 0.01, hi = 1;
+    while (ampRate(hi) < V && hi < 60) hi *= 2;
+    for (var i = 0; i < 200; i++){
+      var m = (lo + hi) / 2;
+      if (ampRate(m) < V) lo = m; else hi = m;
+    }
+    capT = (lo + hi) / 2;
+    capAmp = amp(capT);
+  }
+  /* uncapped amplification, then velocity-capped growth of the amplification */
+  function cappedAmp(t){ return t <= capT ? amp(t) : capAmp + V * (t - capT); }
+
+  /* ARMOR AS A MULTIPLIER: identity at t=0, never below 1.
+     x = 1 + amplification  ->  x >= 1 for every t >= 0. */
+  function armor(t){ return 1 + cappedAmp(t); }
+  /* the multiplier that has not yet been capped (for the dashed reference) */
+  function ghost(t){ return 1 + amp(t); }
+
+  function product(t){ return armor(t) * human(t); }
+
+  /* Because z = x·y, the human base contribution is y and the armor's added
+     contribution is (x-1)·y. Human share = y/z = 1/x, exactly. */
+  function shareHuman(t){ return 1 / armor(t); }
+  function shareArmor(t){ return 1 - 1 / armor(t); }
+
+  recalibrate();
+
+  /* ============================================================
+     FORMATTING
+     ============================================================ */
+  function sciParts(v, digits){
+    digits = digits || 3;
+    if (v === 0) return { m: 0, e: null };
+    var e = Math.floor(Math.log10(Math.abs(v)));
+    var m = Number((v / Math.pow(10, e)).toFixed(digits - 1));
+    if (Math.abs(m) >= 10){ m /= 10; e += 1; }
+    return { m: m, e: e };
+  }
+  function trimNum(v, digits){ return String(Number(v.toPrecision(digits))); }
+  function H(v, digits){
+    digits = digits || 3;
+    if (v === 0) return "0";
+    if (!isFinite(v)) return "∞";
+    var a = Math.abs(v);
+    if (a >= 1e-2 && a < 1e4) return trimNum(v, digits);
+    var p = sciParts(v, digits);
+    return trimNum(p.m, digits) + " × 10<sup>" + (p.e < 0 ? "−" + Math.abs(p.e) : p.e) + "</sup>";
+  }
+  function S(v, digits, size){
+    digits = digits || 3; size = size || 7.5;
+    if (v === 0) return "0";
+    var a = Math.abs(v);
+    if (a >= 1e-2 && a < 1e4) return trimNum(v, digits);
+    var p = sciParts(v, digits);
+    return trimNum(p.m, digits) + "×10<tspan dy=\"-4\" font-size=\"" + size + "\">" + (p.e < 0 ? "-" + Math.abs(p.e) : p.e) + "</tspan>";
+  }
+  function pct(f, digits){ return H(f * 100, digits || 3) + "%"; }
+  var fmtDate = (function(){
+    var f = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" });
+    return function(t){ return f.format(new Date(T0 + t * YEAR_MS)); };
+  })();
+  var nowT = (Date.now() - T0) / YEAR_MS;
+
+  function clamp(v, lo, hi){ return v < lo ? lo : v > hi ? hi : v; }
+  function niceStep(span, target){
+    var steps = [1,2,3,4,5,6,8,10,15,20,25,30,40,50,60,80,100,150,200,250,300,400,500,600,800,1000];
+    var best = steps[0], bd = Infinity;
+    for (var i = 0; i < steps.length; i++){
+      var d = Math.abs(span / steps[i] - target);
+      if (d < bd){ bd = d; best = steps[i]; }
+    }
+    return best;
+  }
+
+  /* ============================================================
+     DOM
+     ============================================================ */
+  var $ = function(s){ return document.querySelector(s); };
+  var el = {
+    stats:$("#stats"), verdict:$("#verdict"), stage:$("#chartStage"),
+    mainHost:$("#mainChart"), tooltip:$("#tooltip"),
+    note:$("#chartNote"), readout:$("#kbdReadout"),
+    insights:$("#insights"), dataBody:$("#dataBody"), legend:$("#legend"),
+    vRange:$("#vRange"), vLabel:$("#vLabel"), capYear:$("#capYear"),
+    floorPct:$("#floorPct"), heroV:$("#heroV")
+  };
+
+  var state = { view:"20y", hidden:{}, hover:null, ptr:null, kbd:false };
+  var rend = null;
+
+  /* ============================================================
+     SAMPLING
+     ============================================================ */
+  var cache = {};
+  function samples(t1){
+    var key = t1 + "|" + V;
+    if (cache[key]) return cache[key];
+    var N = 1100, arr = [];
+    for (var i = 0; i < N; i++){
+      var t = T_MIN + (t1 - T_MIN) * i / (N - 1);
+      arr.push([t, armor(t), human(t), product(t), ghost(t), cappedAmp(t)]);
+    }
+    cache[key] = arr;
+    return arr;
+  }
+
+  function domainOver(arr, padLo, padHi, idxs){
+    var mn = Infinity, mx = -Infinity;
+    for (var i = 0; i < arr.length; i++){
+      for (var j = 0; j < idxs.length; j++){
+        var v = arr[i][idxs[j]];
+        if (!(v > 0)) continue;
+        var l = Math.log10(v);
+        if (l < mn) mn = l;
+        if (l > mx) mx = l;
+      }
+    }
+    return { lo: Math.floor(mn - padLo), hi: Math.ceil(mx + padHi) };
+  }
+
+  /* ============================================================
+     CHART — three aligned panels on one time axis
+     A: factors (armor, human, uncapped)   log
+     B: product  z                         log
+     C: human share of product = 1/x        linear
+     ============================================================ */
+  var VIEWS = {
+    "20y":  { t1:yearT(2040), ticks:[[0,"2020"],[4,"2024"],[8,"2028"],[12,"2032"],[16,"2036"],[20,"2040"]],
+              ticksM:[[0,"2020"],[10,"2030"],[20,"2040"]] },
+    "100y": { t1:yearT(2120), ticks:[[0,"2020"],[20,"2040"],[40,"2060"],[60,"2080"],[80,"2100"],[100,"2120"]],
+              ticksM:[[0,"2020"],[50,"2070"],[100,"2120"]] }
+  };
+
+  function powLabel(v){
+    return (v === 0) ? "1" : ("10<tspan dy=\"-4\" font-size=\"7.5\">" + (v < 0 ? "-" + Math.abs(v) : v) + "</tspan>");
+  }
+  function domainOver(arr, idxs, padLo, padHi, minSpan){
+    var mn = Infinity, mx = -Infinity;
+    for (var i = 0; i < arr.length; i++){
+      for (var j = 0; j < idxs.length; j++){
+        var v = arr[i][idxs[j]];
+        if (!(v > 0)) continue;
+        var l = Math.log10(v);
+        if (l < mn) mn = l;
+        if (l > mx) mx = l;
+      }
+    }
+    var lo = mn - padLo, hi = mx + padHi;
+    /* keep a readable minimum span */
+    minSpan = minSpan || 1.6;
+    if (hi - lo < minSpan){
+      var mid = (lo + hi) / 2;
+      lo = mid - minSpan / 2; hi = mid + minSpan / 2;
+    }
+    return { lo: lo, hi: hi };
+  }
+
+  function buildChart(viewKey, W){
+    var view = VIEWS[viewKey], t1 = view.t1;
+    var mobile = W < 640;
+    var Z = mobile ? 0.72 : 1;                  /* vertical compression on mobile */
+    var M = { top: Math.round(62 * Z), left: mobile ? 48 : 60, right: mobile ? 60 : 104, bottom: 30 };
+    var A_H = Math.round(216 * Z), B_H = Math.round(122 * Z), C_H = Math.round(88 * Z);
+    var gapAB = Math.round(34 * Z), gapBC = Math.round(30 * Z);
+    var plotW = Math.max(90, W - M.left - M.right);
+    var aTop = M.top, aBot = aTop + A_H;
+    var bTop = aBot + gapAB, bBot = bTop + B_H;
+    var cTop = bBot + gapBC, cBot = cTop + C_H;
+    var plotR = M.left + plotW;
+    var svgH = cBot + M.bottom;
+    var R = 6;                                   /* rounded panel corners */
+
+    var data = samples(t1);
+    var fdom = domainOver(data, [1, 2], 0.35, 0.35);
+    var zdom = domainOver(data, [3], 0.3, 0.3);
+    if (zdom.hi - zdom.lo < 1.2){
+      var c = (zdom.hi + zdom.lo) / 2;
+      zdom = { lo: Math.floor(c - 0.6), hi: Math.ceil(c + 0.6) };
+    }
+
+    function sx(t){ return M.left + (t / t1) * plotW; }
+    function aScale(v){ return aBot - (Math.log10(v) - fdom.lo) / (fdom.hi - fdom.lo) * A_H; }
+    function bScale(v){ return bBot - (Math.log10(v) - zdom.lo) / (zdom.hi - zdom.lo) * B_H; }
+    function cScale(share){ return cBot - share * C_H; }
+
+    var p = [];
+    p.push('<svg viewBox="0 0 ' + W + ' ' + svgH + '" width="' + W + '" height="' + svgH + '" role="img" aria-label="Three aligned time panels: armor and human factors (log), their product (log), and the human share of the product (linear).">');
+    p.push('<defs>');
+    p.push('<clipPath id="clipA"><rect x="' + M.left + '" y="' + aTop + '" width="' + plotW + '" height="' + A_H + '" rx="' + R + '"/></clipPath>');
+    p.push('<clipPath id="clipB"><rect x="' + M.left + '" y="' + bTop + '" width="' + plotW + '" height="' + B_H + '" rx="' + R + '"/></clipPath>');
+    p.push('<clipPath id="clipC"><rect x="' + M.left + '" y="' + cTop + '" width="' + plotW + '" height="' + C_H + '" rx="' + R + '"/></clipPath>');
+    p.push('<linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fe3d0" stop-opacity=".10"/><stop offset="1" stop-color="#4fe3d0" stop-opacity="0"/></linearGradient>');
+    p.push('<linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bda9ff" stop-opacity=".14"/><stop offset="1" stop-color="#bda9ff" stop-opacity="0"/></linearGradient>');
+    p.push('<linearGradient id="gC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb45e" stop-opacity=".55"/><stop offset="1" stop-color="#1f9e93" stop-opacity=".30"/></linearGradient>');
+    p.push('</defs>');
+
+    /* panel frames */
+    [ [aTop, A_H], [bTop, B_H], [cTop, C_H] ].forEach(function(fr){
+      p.push('<rect x="' + M.left + '" y="' + fr[0] + '" width="' + plotW + '" height="' + fr[1] + '" rx="' + R + '" fill="rgba(255,255,255,.012)" stroke="rgba(148,170,205,.10)"/>');
+    });
+
+    /* ---- panel A: grid, ticks, series ---- */
+    var aStep = niceStep(fdom.hi - fdom.lo, mobile ? 3 : 5);
+    for (var av = Math.ceil(fdom.lo / aStep) * aStep; av <= fdom.hi + 1e-9; av += aStep){
+      var ay = aScale(Math.pow(10, av));
+      p.push('<line class="grid" x1="' + M.left + '" y1="' + ay.toFixed(2) + '" x2="' + plotR + '" y2="' + ay.toFixed(2) + '"/>');
+      p.push('<text class="tick" x="' + (M.left - 9) + '" y="' + (ay + 3.5).toFixed(2) + '" text-anchor="end">' + powLabel(av) + '</text>');
+    }
+
+    /* vertical gridlines across every panel */
+    (mobile ? view.ticksM : view.ticks).forEach(function(pair){
+      var tx = sx(pair[0]);
+      p.push('<line class="grid-v" x1="' + tx.toFixed(2) + '" y1="' + aTop + '" x2="' + tx.toFixed(2) + '" y2="' + aBot + '"/>');
+      p.push('<line class="grid-v" x1="' + tx.toFixed(2) + '" y1="' + bTop + '" x2="' + tx.toFixed(2) + '" y2="' + bBot + '"/>');
+      p.push('<line class="grid-v" x1="' + tx.toFixed(2) + '" y1="' + cTop + '" x2="' + tx.toFixed(2) + '" y2="' + cBot + '"/>');
+      p.push('<text class="tick-x" x="' + tx.toFixed(2) + '" y="' + (cBot + 19) + '" text-anchor="middle">' + pair[1] + '</text>');
+    });
+
+    /* guides: cap binds + now (full height) */
+    var capVisible = capT <= t1;
+    var nowVisible = nowT >= 0 && nowT <= t1;
+    var cx = capVisible ? sx(capT) : null;
+    var nx = nowVisible ? sx(nowT) : null;
+    /* if the two vertical guides land close together, push their labels apart */
+    var tight = capVisible && nowVisible && Math.abs(cx - nx) < 132;
+
+    if (capVisible){
+      p.push('<line class="cap-line" x1="' + cx.toFixed(2) + '" y1="' + aTop + '" x2="' + cx.toFixed(2) + '" y2="' + cBot + '"/>');
+    }
+    if (nowVisible){
+      p.push('<line class="now-line" x1="' + nx.toFixed(2) + '" y1="' + aTop + '" x2="' + nx.toFixed(2) + '" y2="' + cBot + '"/>');
+    }
+    if (!mobile){
+      if (capVisible){
+        p.push('<text class="cap-lab" x="' + (cx + 6).toFixed(2) + '" y="' + (tight ? aTop - 22 : aTop - 9) +
+          '" text-anchor="start">cap binds · ' + fmtDate(capT) + '</text>');
+      }
+      if (nowVisible){
+        p.push('<text class="now-lab" x="' + (tight ? nx + 6 : nx).toFixed(2) + '" y="' + (aTop - 9) +
+          '" text-anchor="' + (tight ? "start" : "middle") + '">now</text>');
+      }
+    } else if (nowVisible){
+      p.push('<text class="now-lab" x="' + nx.toFixed(2) + '" y="' + (aTop - 4) + '" text-anchor="middle">now</text>');
+    }
+
+    /* panel A series */
+    function pathOf(idx, scale, clip){
+      var d = "";
+      for (var i = 0; i < data.length; i++){
+        var v = data[i][idx];
+        if (!(v > 0)) continue;
+        d += (d ? "L" : "M") + sx(data[i][0]).toFixed(2) + "," + scale(v).toFixed(2);
+      }
+      return '<path ' + (clip ? 'clip-path="url(#' + clip + ')" ' : '') + 'class="serie ' + arguments[3] + '" d="' + d + '"/>';
+    }
+    if (!state.hidden.ghost) p.push(pathOf(4, aScale, "clipA", "s-ghost"));
+    if (!state.hidden.cloak) p.push(pathOf(1, aScale, "clipA", "s-cloak"));
+    if (!state.hidden.human) p.push(pathOf(2, aScale, "clipA", "s-human"));
+
+    /* where the uncapped curve leaves the panel */
+    if (!state.hidden.ghost){
+      for (var i2 = 1; i2 < data.length; i2++){
+        if (aScale(data[i2][4]) < aTop){
+          var te = data[i2][0], ex = sx(te);
+          p.push('<circle cx="' + ex.toFixed(2) + '" cy="' + (aTop + 4) + '" r="3" fill="var(--cloak)" opacity=".8"/>');
+          break;
+        }
+      }
+    }
+
+    /* panel B: product */
+    var bStep = niceStep(zdom.hi - zdom.lo, mobile ? 2 : 4);
+    for (var bv = Math.ceil(zdom.lo / bStep) * bStep; bv <= zdom.hi + 1e-9; bv += bStep){
+      var by = bScale(Math.pow(10, bv));
+      p.push('<line class="grid" x1="' + M.left + '" y1="' + by.toFixed(2) + '" x2="' + plotR + '" y2="' + by.toFixed(2) + '"/>');
+      p.push('<text class="tick tick-b" x="' + (M.left - 9) + '" y="' + (by + 3.5).toFixed(2) + '" text-anchor="end">' + powLabel(bv) + '</text>');
+    }
+    if (!state.hidden.total){
+      var dZ = ""; var firstZ = null;
+      for (var i3 = 0; i3 < data.length; i3++){
+        var zz = data[i3][3]; if (!(zz > 0)) continue;
+        var px3 = sx(data[i3][0]), py3 = bScale(zz);
+        if (firstZ === null) firstZ = [px3, py3];
+        dZ += (dZ ? "L" : "M") + px3.toFixed(2) + "," + py3.toFixed(2);
+      }
+      p.push('<path clip-path="url(#clipB)" fill="url(#gB)" d="' + dZ + "L" + plotR + "," + bBot + "L" + M.left + "," + bBot + 'Z"/>');
+      p.push('<path clip-path="url(#clipB)" class="serie s-total" d="' + dZ + '"/>');
+    }
+
+    /* panel C: human share */
+    p.push('<line class="fifty" x1="' + M.left + '" y1="' + cScale(0.5).toFixed(2) + '" x2="' + plotR + '" y2="' + cScale(0.5).toFixed(2) + '"/>');
+    p.push('<text class="share-tick" x="' + (M.left - 9) + '" y="' + (cTop + 9) + '" text-anchor="end">100%</text>');
+    p.push('<text class="share-tick" x="' + (M.left - 9) + '" y="' + (cScale(0.5) + 3.5).toFixed(2) + '" text-anchor="end">50%</text>');
+    p.push('<text class="share-tick" x="' + (M.left - 9) + '" y="' + (cBot - 1) + '" text-anchor="end">0%</text>');
+
+    /* exact decomposition: z = y + (x-1)·y.  Human share = 1/x. */
+    var dSh = "", dShArea = "";
+    for (var i4 = 0; i4 < data.length; i4++){
+      var sh = 1 / data[i4][1];                    /* shareHuman = 1/x */
+      var px4 = sx(data[i4][0]), py4 = cScale(sh);
+      dSh += (dSh ? "L" : "M") + px4.toFixed(2) + "," + py4.toFixed(2);
+    }
+    dShArea = dSh + "L" + plotR + "," + cBot + "L" + M.left + "," + cBot + "Z";
+    p.push('<path clip-path="url(#clipC)" fill="url(#gC)" d="' + dShArea + '"/>');
+    p.push('<path clip-path="url(#clipC)" class="serie s-share" d="' + dSh + '"/>');
+
+    /* the 50% line is now an exact landmark: x = 2 at t = 1 */
+    var halfX = sx(TC);
+    if (TC <= t1){
+      p.push('<circle cx="' + halfX.toFixed(2) + '" cy="' + cScale(0.5).toFixed(2) + '" r="3.6" fill="#0a1018" stroke="var(--amber)" stroke-width="1.7"/>');
+    }
+
+    /* panel headings */
+    p.push('<text class="panel-head in-frame" x="' + (M.left + 10) + '" y="' + (aTop + 14) + '">FACTORS · log</text>');
+    p.push('<text class="panel-head in-frame" x="' + (M.left + 10) + '" y="' + (bTop + 14) + '">PRODUCT z · log</text>');
+    p.push('<text class="panel-head" x="' + (plotR - 10) + '" y="' + (cTop - 8) + '" text-anchor="end">HUMAN SHARE OF z = 1/x · 50% ON ' + fmtDate(TC).toUpperCase() + '</text>');
+
+    /* end labels */
+    if (!mobile){
+      var last = data[data.length - 1], lx = plotR + 10;
+      if (!state.hidden.cloak){
+        p.push('<text class="dl-name" x="' + lx + '" y="' + (aScale(last[1]) - 1).toFixed(2) + '" fill="var(--cloak)">armor x</text>');
+        p.push('<text class="dl-val" x="' + lx + '" y="' + (aScale(last[1]) + 9).toFixed(2) + '">' + S(last[1], 3, 6.8) + '</text>');
+      }
+      if (!state.hidden.human){
+        p.push('<text class="dl-name" x="' + lx + '" y="' + (aScale(last[2]) - 1).toFixed(2) + '" fill="var(--human)">human y</text>');
+        p.push('<text class="dl-val" x="' + lx + '" y="' + (aScale(last[2]) + 9).toFixed(2) + '">' + S(last[2], 3, 6.8) + '</text>');
+      }
+      if (!state.hidden.total){
+        p.push('<text class="dl-name" x="' + lx + '" y="' + (bScale(last[3]) - 1).toFixed(2) + '" fill="var(--total)">product z</text>');
+        p.push('<text class="dl-val" x="' + lx + '" y="' + (bScale(last[3]) + 9).toFixed(2) + '">' + S(last[3], 3, 6.8) + '</text>');
+      }
+      var shEnd = last[2] / (last[1] + last[2]);
+      p.push('<text class="dl-val" x="' + lx + '" y="' + (cScale(shEnd) + 3.5).toFixed(2) + '">' + H(shEnd * 100, 2) + '%</text>');
+    }
+
+    /* hover layer */
+    p.push('<line class="xhair" x1="0" y1="' + aTop + '" x2="0" y2="' + cBot + '" style="display:none"/>');
+    p.push('<circle class="hover-dot hd-ghost" r="3.2" fill="none" stroke="var(--cloak)" stroke-opacity=".6" style="display:none"/>');
+    p.push('<circle class="hover-dot hd-cloak" r="3.6" fill="var(--cloak)" style="display:none"/>');
+    p.push('<circle class="hover-dot hd-human" r="3.6" fill="var(--human)" style="display:none"/>');
+    p.push('<circle class="hover-dot hd-total" r="3.6" fill="var(--total)" style="display:none"/>');
+    p.push('<circle class="hover-dot hd-share" r="3.8" fill="var(--amber)" style="display:none"/>');
+    p.push('<rect x="' + M.left + '" y="' + aTop + '" width="' + plotW + '" height="' + (cBot - aTop) + '" fill="transparent"/>');
+    p.push('</svg>');
+
+    return {
+      svg:p.join(""), W:W, H:svgH, M:M, plotW:plotW, t1:t1, mobile:mobile,
+      aTop:aTop, aBot:aBot, bTop:bTop, bBot:bBot, cTop:cTop, cBot:cBot,
+      sx:sx, aScale:aScale, bScale:bScale, cScale:cScale, fdom:fdom, zdom:zdom
+    };
+  }
+
+  /* ============================================================
+     RENDER
+     ============================================================ */
+  function render(){
+    if (!el.stage) return;
+    var W = Math.max(300, Math.round(el.mainHost.clientWidth || el.stage.clientWidth || 900));
+    var ch = buildChart(state.view, W);
+    el.mainHost.innerHTML = ch.svg;
+    rend = { ch:ch, W:W, t1:ch.t1, M:ch.M, plotW:ch.plotW, sx:ch.sx,
+             aScale:ch.aScale, bScale:ch.bScale, cScale:ch.cScale };
+    rend.refs = {
+      cross: el.mainHost.querySelector(".xhair"),
+      dotGhost: el.mainHost.querySelector(".hd-ghost"),
+      dotCloak: el.mainHost.querySelector(".hd-cloak"),
+      dotHuman: el.mainHost.querySelector(".hd-human"),
+      dotTotal: el.mainHost.querySelector(".hd-total"),
+      dotShare: el.mainHost.querySelector(".hd-share")
+    };
+
+    var notes = {
+      "20y": "The armor multiplier grows from <b>1</b> and reaches <b>2</b> on <b>" + fmtDate(TC) +
+        "</b> — the exact 50/50 point. The growth-rate cap binds on <b>" + fmtDate(capT) +
+        "</b>, after which the armor grows at a flat <b>+V per year</b>. The dashed line is the uncapped x′. The product never falls below <b>1</b>.",
+      "100y": "Over a century, uncapped x′ leaves the chart while capped armor grows in a straight line and the product rises with it. The human share, exactly <b>1/x</b>, keeps shrinking and never reaches zero."
+    };
+    el.note.innerHTML = notes[state.view];
+
+    if (state.hover != null) updateHover();
+  }
+
+  /* ============================================================
+     HOVER
+     ============================================================ */
+  function tooltipHTML(t){
+    var x = armor(t), y = human(t), z = x * y, sh = 1 / x;
+    return '<div class="tt-head"><b>' + fmtDate(t) + '</b><span>t = ' + t.toFixed(2) + '</span></div>' +
+      '<div class="tt-row"><i style="--c:var(--cloak)"></i><span>armor · x</span><em>' + H(x) + '</em></div>' +
+      (t < capT ? '<div class="tt-row"><i style="--c:var(--cloak);opacity:.45"></i><span>uncapped · x′</span><em>' + H(ghost(t)) + '</em></div>' : '') +
+      '<div class="tt-row"><i style="--c:var(--human)"></i><span>human · y</span><em>' + H(y) + '</em></div>' +
+      '<div class="tt-row"><i style="--c:var(--total)"></i><span>product · z</span><em>' + H(z) + '</em></div>' +
+      '<div class="tt-foot"><span>human share ' + pct(sh, 2) + '</span><span>x/y ' + H(x / y, 3) + '</span></div>';
+  }
+
+  function placeTooltip(px, py){
+    var tw = el.tooltip.offsetWidth, th = el.tooltip.offsetHeight;
+    var stageW = el.stage.clientWidth;
+    var L = clamp(px - tw / 2, 8, Math.max(8, stageW - tw - 8));
+    var T = py - th - 16;
+    if (T < 8) T = py + 18;
+    el.tooltip.style.left = L + "px";
+    el.tooltip.style.top = T + "px";
+  }
+
+  function updateHover(){
+    if (!rend) return;
+    var t = state.hover, r = rend.refs;
+    if (t == null){
+      ["cross","dotGhost","dotCloak","dotHuman","dotTotal","dotShare"].forEach(function(k){ r[k].style.display = "none"; });
+      el.tooltip.classList.remove("on");
+      return;
+    }
+    var x = rend.sx(t);
+    r.cross.style.display = "";
+    r.cross.setAttribute("x1", x.toFixed(2));
+    r.cross.setAttribute("x2", x.toFixed(2));
+
+    var vals = { cloak:armor(t), ghost:ghost(t), human:human(t), total:product(t) };
+    var sh = vals.human / (vals.cloak + vals.human);
+    var map = [
+      ["ghost", r.dotGhost,  rend.aScale(vals.ghost)],
+      ["cloak", r.dotCloak,  rend.aScale(vals.cloak)],
+      ["human", r.dotHuman,  rend.aScale(vals.human)],
+      ["total", r.dotTotal,  rend.bScale(vals.total)],
+      ["share", r.dotShare,  rend.cScale(sh)]
+    ];
+    map.forEach(function(row){
+      var dot = row[1];
+      if (state.hidden[row[0]]){ dot.style.display = "none"; return; }
+      dot.style.display = "";
+      dot.setAttribute("cx", x.toFixed(2));
+      dot.setAttribute("cy", row[2].toFixed(2));
+    });
+
+    el.tooltip.innerHTML = tooltipHTML(t);
+    el.tooltip.classList.add("on");
+
+    if (state.ptr) placeTooltip(state.ptr.x, state.ptr.y);
+    else {
+      var svg = el.mainHost.querySelector("svg");
+      if (!svg) return;
+      var sr = svg.getBoundingClientRect(), st = el.stage.getBoundingClientRect();
+      placeTooltip((sr.left - st.left) + x * (sr.width / rend.W),
+                   (sr.top - st.top) + rend.ch.aTop + 34);
+    }
+  }
+
+  function announce(t){
+    if (!t){ el.readout.textContent = ""; return; }
+    var x = armor(t), y = human(t);
+    el.readout.textContent = fmtDate(t) + ", t " + t.toFixed(2) + ". Armor " + H(x).replace(/<\/?sup>/g,"") +
+      ". Human " + H(y).replace(/<\/?sup>/g,"") + ". Product " + H(x * y).replace(/<\/?sup>/g,"") +
+      ". Human share of the product " + H(100 / x, 2).replace(/<\/?sup>/g,"") + " percent.";
+  }
+
+  function attachPointer(host){
+    host.addEventListener("pointermove", function(ev){
+      if (!rend) return;
+      var svg = host.querySelector("svg"); if (!svg) return;
+      var rect = svg.getBoundingClientRect();
+      if (rect.width < 1) return;
+      var st = el.stage.getBoundingClientRect();
+      var xView = (ev.clientX - rect.left) * (rend.W / rect.width);
+      var frac = clamp((xView - rend.M.left) / rend.plotW, 0, 1);
+      state.hover = clamp(frac * rend.t1, T_MIN, rend.t1);
+      state.kbd = false;
+      state.ptr = { x: ev.clientX - st.left, y: ev.clientY - st.top };
+      updateHover();
+    });
+    host.addEventListener("pointerleave", function(){
+      if (state.kbd) return;
+      state.hover = null; state.ptr = null; updateHover();
+    });
+    host.addEventListener("pointerdown", function(ev){
+      if (ev.pointerType === "touch") host.dispatchEvent(new PointerEvent("pointermove", ev));
+    });
+  }
+  attachPointer(el.mainHost);
+
+  el.stage.addEventListener("keydown", function(ev){
+    if (!rend) return;
+    var span = rend.t1 - T_MIN, step = span / 240;
+    var t = state.hover == null ? clamp(nowT, T_MIN, rend.t1) : state.hover;
+    var handled = true;
+    switch (ev.key){
+      case "ArrowRight": t += ev.shiftKey ? step * 10 : step; break;
+      case "ArrowLeft":  t -= ev.shiftKey ? step * 10 : step; break;
+      case "Home": t = T_MIN; break;
+      case "End": t = rend.t1; break;
+      case "Escape":
+        state.hover = null; state.ptr = null; state.kbd = false;
+        updateHover(); announce(null); break;
+      default: handled = false;
+    }
+    if (!handled) return;
+    ev.preventDefault();
+    if (ev.key !== "Escape"){
+      state.kbd = true; state.ptr = null;
+      state.hover = clamp(t, T_MIN, rend.t1);
+      updateHover(); announce(state.hover);
+    }
+  });
+  el.stage.addEventListener("blur", function(){
+    if (state.kbd){ state.kbd = false; state.hover = null; state.ptr = null; updateHover(); }
+  });
+
+  /* ============================================================
+     STATS / INSIGHTS / TABLE / CONTROLS
+     ============================================================ */
+  function renderStats(){
+    var t = Math.max(nowT, 0.02);
+    var x = armor(t), y = human(t), z = x * y, sh = 1 / x;
+    var capped = nowT >= capT;
+    var tiles = [
+      { c:"var(--cloak)", lab:"armor capability · x", v:H(x),
+        sub: capped ? "+V per year · capped" : "super-exponential · pre-cap" },
+      { c:"var(--human)", lab:"human capability · y", v:H(y),
+        sub:"grows 10% per decade · never falls" },
+      { c:"var(--total)", lab:"product · z", v:H(z), sub:"x · y · never below 1" },
+      { c:"var(--human)", lab:"human share of z", v:pct(sh, 3),
+        sub:"exactly 1 / x" }
+    ];
+    el.stats.innerHTML = tiles.map(function(tile){
+      return '<div class="stat" style="--c:' + tile.c + '"><div class="lab"><i></i>' + tile.lab + '</div>' +
+        '<div class="v">' + tile.v + '</div><div class="sub">' + tile.sub + '</div></div>';
+    }).join("");
+
+    var phaseTxt, phaseCol;
+    if (nowT < capT){ phaseTxt = "pre-cap · armor accelerating"; phaseCol = "var(--cloak)"; }
+    else { phaseTxt = "post-cap · armor growing at +V/yr"; phaseCol = "var(--total)"; }
+    el.verdict.innerHTML = '<span class="pulse" style="background:' + phaseCol + '"></span>' +
+      '<span class="t">' + phaseTxt + '</span><span class="sep">·</span>' +
+      '<span>product ' + H(z, 3) + '</span><span class="sep">·</span>' +
+      '<span class="t">t = ' + t.toFixed(2) + ' · ' + fmtDate(t) + '</span>';
+
+    el.vLabel.textContent = String(V);
+    el.heroV.textContent = "V = " + V;
+    el.capYear.textContent = fmtDate(capT);
+    el.floorPct.textContent = H(product(0), 3);
+  }
+
+  function renderInsights(){
+    var xCap = armor(capT);
+    var shareAtCap = 1 / xCap;
+    var z100 = product(100), x100 = armor(100), y100 = human(100);
+    var cards = [
+      { c:"var(--cloak)", tag:"cap binds · " + fmtDate(capT),
+        h:"Growth rate hits the limit",
+        p:"Until <span class=\"n\">" + fmtDate(capT) + "</span> the armor compounds as (t/7)<sup>2+t/2</sup>. Its growth rate then reaches <span class=\"n\">V = " + V +
+          "</span> and it switches to straight-line growth at +V per year." },
+      { c:"var(--human)", tag:"from day one",
+        h:"Human capability keeps growing",
+        p:"y = b(1 + 0.1t) rises from <span class=\"n\">1.00</span> in 2020 to <span class=\"n\">" + H(human(20)) +
+          "</span> in 2040 and <span class=\"n\">" + H(human(100)) + "</span> by 2120. It never falls." },
+      { c:"var(--total)", tag:"after " + fmtDate(TC),
+        h:"The armor takes the larger share",
+        p:"Human share is <span class=\"n\">1/x</span>. It crosses 50% on " + fmtDate(TC) + ", passes 25% in 2028, 10% in 2029 and 1% by 2032 — while the human term keeps growing from " + H(human(TC)) + " to " + H(human(30)) + "." },
+      { c:"var(--cloak)", tag:"year 100",
+        h:"A century of straight-line armor",
+        p:"By 2120: armor <span class=\"n\">" + H(x100) + "</span>, human <span class=\"n\">" + H(y100) +
+          "</span>, product <span class=\"n\">" + H(z100) + "</span>. Uncapped, x′ would have reached " + H(ghost(100)) + "." }
+    ];
+    el.insights.innerHTML = cards.map(function(card){
+      return '<article class="card" style="--c:' + card.c + '"><div class="tag">' + card.tag + '</div>' +
+        '<h3>' + card.h + '</h3><p>' + card.p + '</p></article>';
+    }).join("");
+  }
+
+  function renderTable(){
+    var ts = [T_MIN, 0.5, 1, 2, 3, 4, 5, 6, TC, 7.5, 8, 9, 10, 12, capT, 20, 30, 50, 100];
+    var seen = {}, rows = [];
+    ts.forEach(function(t){
+      var key = t.toFixed(3); if (seen[key]) return; seen[key] = 1;
+      var x = armor(t), y = human(t);
+      rows.push('<tr><td>' + fmtDate(t) + '</td><td>' + t.toFixed(2) + '</td><td>' + H(x) + '</td><td>' + H(y) +
+        '</td><td>' + H(x * y) + '</td><td>' + pct(1 / x, 3) + '</td><td>' + H(x / y, 3) + '</td></tr>');
+    });
+    el.dataBody.innerHTML = rows.join("");
+  }
+
+  function refreshAll(){
+    recalibrate(); cache = {};
+    renderStats(); renderInsights(); renderTable(); render();
+  }
+
+  el.vRange.addEventListener("input", function(){
+    V = Number(el.vRange.value);
+    refreshAll();
+  });
+
+  var viewBtns = document.querySelectorAll(".seg button");
+  function setView(v, push){
+    if (!VIEWS[v]) return;
+    state.view = v;
+    Array.prototype.forEach.call(viewBtns, function(b){
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === v));
+    });
+    state.hover = null; state.ptr = null; state.kbd = false;
+    el.tooltip.classList.remove("on");
+    if (push && history.replaceState) history.replaceState(null, "", "#" + v);
+    render();
+  }
+  Array.prototype.forEach.call(viewBtns, function(btn){
+    btn.addEventListener("click", function(){
+      var v = btn.getAttribute("data-view");
+      if (!v || v === state.view) return;
+      setView(v, true);
+    });
+  });
+  window.addEventListener("hashchange", function(){
+    var h = (location.hash || "").replace(/^#/, "");
+    if (VIEWS[h] && h !== state.view) setView(h, false);
+  });
+
+  Array.prototype.forEach.call(el.legend.querySelectorAll(".chip"), function(chip){
+    chip.addEventListener("click", function(){
+      var k = chip.getAttribute("data-serie");
+      var pressed = chip.getAttribute("aria-pressed") === "true";
+      chip.setAttribute("aria-pressed", String(!pressed));
+      if (pressed) state.hidden[k] = true; else delete state.hidden[k];
+      render();
+      if (state.hover != null) updateHover();
+    });
+  });
+
+  var lastW = 0;
+  function boot(){
+    var hv = (location.hash || "").replace(/^#/, "");
+    if (VIEWS[hv]){
+      state.view = hv;
+      Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function(b){
+        b.setAttribute("aria-pressed", String(b.getAttribute("data-view") === hv));
+      });
+    }
+    renderStats(); renderInsights(); renderTable();
+    lastW = Math.round(el.stage.clientWidth);
+    render();
+    el.mainHost.addEventListener("click", function(){ el.stage.focus({ preventScroll: true }); });
+    if (typeof ResizeObserver !== "undefined"){
+      new ResizeObserver(function(){
+        var w = Math.round(el.stage.clientWidth);
+        if (w > 0 && w !== lastW){ lastW = w; render(); }
+      }).observe(el.stage);
+    } else {
+      window.addEventListener("resize", function(){
+        var w = Math.round(el.stage.clientWidth);
+        if (w > 0 && w !== lastW){ lastW = w; render(); }
+      });
+    }
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+</body>
+</html>
